@@ -61,5 +61,5 @@ here is a footnote: ^[Text and things]
 * Creating `tests/testthat`.
 * Creating `tests/testthat.R` from template.
 
-
+# test has to be reviewed closely
 
