@@ -10,7 +10,7 @@
 #'
 #' @param a numeric
 #'
-#' @return a character
+#' @return a plot
 #' @export
 #'
 #' @examples
