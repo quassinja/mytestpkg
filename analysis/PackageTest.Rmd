@@ -38,7 +38,7 @@ curve(5*x^3,add=T)    # Plot an equation as a curve
 # bibliographic citations example
 
 <!--
-see above: bibliography: my_references.bib  (need BibTex citations!)
+see above: bibliography: my_references.bib  (need BibTex citations!) Bibtex data needed!!!!!
 -->
  reproducible research is important [@hillier1976space]
  
