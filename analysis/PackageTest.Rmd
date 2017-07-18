@@ -1,0 +1,61 @@
+---
+title: "PackageTest"
+author: "Nicole Grunert"  # or: author: (new line) - Nicole Grunert (new line) - other Author
+date: '`r Sys.Date()`'
+bibliography: my_references.bib
+#output: html_document  # .yml or meta chunk html_documentbookdown::word_document2
+output: bookdown::word_document2
+---
+# challenges: 
+# create analysis directory
+# create rmd in that directory
+# use bookdown to get cap/cross-refs
+# write a fn in R
+# document your function with roxygen
+# use the function in your rmd
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(mytestpkg)
+```
+
+
+
+```{r}
+plot(-1, xlim = c(0,5), ylim = c(0,5))
+curve(5*x^3,add=T)    # Plot an equation as a curve
+```
+
+# bibliographic citations example
+
+<!--
+see above: bibliography: my_references.bib  (need BibTex citations!)
+-->
+ reproducible research is important [@hillier1976space]
+ 
+ more than one author:[see these ones: @hillier1976space;@jammer1969concepts;@gregory1994geographical]
+ 
+ @gregory1994geographical is a very good paper...
+ 
+ Hillier build the whole concept of Space Syntax Theory [-@hillier1976space]
+
+here is a footnote: ^[Text and things]
+
+
+# License
+
+> devtools::use_mit_license()
+* Updating license field in DESCRIPTION.
+* Creating `LICENSE` from template.
+> devtools::use_testthat()
+* Adding testthat to Suggests
+* Creating `tests/testthat`.
+* Creating `tests/testthat.R` from template.
+
+
+
