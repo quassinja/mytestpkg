@@ -1,14 +1,12 @@
-From rocker/verse:3.4.1
+FROM rocker/verse:3.4.1
 
-Maintainer Nicole Grunert <nicolegrunert@gmail.com>
+MAINTAINER Nicole Grunert <nicolegrunert@gmail.com>
 
-Copy . /mytestpkg
+COPY . /mytestpkg
 
-Run . /etc/environment \
+RUN . /etc/environment \
 
-  && ls
+  && R --vanilla "devtools::install('/mytestpkg', dep=TRUE)" \
 
-  && R --vanilla "devtools::install('mytestpkg', dep=TRUE)" \
-
-  && R --vanilla "rmarkdown::render('mytestpkg/analysis/PackageTest.Rmd')"
+  && R --vanilla "rmarkdown::render('/mytestpkg/analysis/PackageTest.Rmd')"
 
