@@ -14,9 +14,9 @@
 #' @export
 #'
 #' @examples
-#'
-#' @importFrom glue glue
 #' number_er(9)
+#' @import glue
+
 
 
 number_er <- function(x){

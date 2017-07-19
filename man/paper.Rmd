@@ -1,0 +1,60 @@
+---
+title: "paper"
+author: "Nicole Grunert"  # or: author: (new line) - Nicole Grunert (new line) - other Author
+date: '`r Sys.Date()`'
+bibliography: my_references.bib
+#output: html_document  # .yml or meta chunk html_document
+output: bookdown::word_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+
+knitr::kable(head(cars),
+             caption = "My Demo Table")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r plot, fig.cap = "curve"}
+plot(-1, xlim = c(0,5), ylim = c(0,5))
+curve(5*x^3,add=T) 
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# references and footnote
+
+ reproducible research is important [@hillier1976space]
+ 
+ more than one author:[see these ones: @hillier1976space;@jammer1969concepts;@gregory1994geographical]
+ 
+ @gregory1994geographical is a very good paper...
+ 
+ Hillier build the whole concept of Space Syntax Theory [-@hillier1976space]
+
+here is a footnote: ^[Text and things]
+
+# captions and crossrefs
+
+In figure XX \@ref(fig:pressureplot) you can clearly see a big increase...
+But in table \@ref(tab:demotable) we can see...
+
+# new function
+
+
+
+
+
