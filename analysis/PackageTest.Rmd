@@ -28,7 +28,7 @@ library(mytestpkg)
 
 # function
 
-rubish function that doesnt work properly
+fantastic shiny rubish function that doesnt work properly
 
 ```{r}
 plot(-1, xlim = c(0,5), ylim = c(0,5))
