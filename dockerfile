@@ -8,5 +8,5 @@ Run . /etc/environment \
 
   && R -e "devtools::install('/mytestpkg', dep=TRUE)" \
 
-  && R -e "rmarkdown::render('/mytestpkg/analysis/paper.Rmd')"
+  && R -e "rmarkdown::render('/mytestpkg/analysis/paper.rmd')"
 
