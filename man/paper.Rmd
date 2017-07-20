@@ -4,11 +4,12 @@ author: "Nicole Grunert"  # or: author: (new line) - Nicole Grunert (new line) -
 date: '`r Sys.Date()`'
 bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document
-output: bookdown::word_document2
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+checkpoint::checkpoint("2017-07-20")
 ```
 
 ## R Markdown
@@ -54,7 +55,7 @@ But in table \@ref(tab:demotable) we can see...
 
 # packrat
 
-install.packages("packrat")
+#install.packages("packrat")
 
 
 <!-- then:
@@ -66,7 +67,7 @@ data(LRB)
 knitr::kable(head(LRB))
 ```
 
-packrat::on()
+#packrat::on()
 
 #packrat::off() turns packrat off, afterwards the folder should be deleted
 
