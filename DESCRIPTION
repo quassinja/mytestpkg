@@ -10,5 +10,6 @@ License: MIT + file LICENSE
 encoding: UTF-8
 LazyData: TRUE
 Suggests: testthat
-Imports: tidyverse
+Imports: tidyverse,
+    glue
 RoxygenNote: 6.0.1
