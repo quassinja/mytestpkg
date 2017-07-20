@@ -1,3 +1,23 @@
+#machine:
+#  services:
+#    - docker
+
+#dependencies:
+#  override:
+#    - docker info
+#    - docker build -t quassinja/mytestpkg  .
+#test:
+#  override:
+#    - docker run --name mytestpkg -d -p 8787:8787 quassinja/mytestpkg ; sleep 10
+#    - curl --retry 10 --retry-delay 5 -v http://localhost:8787
+
+#deployment:
+#  hub:
+#    branch: master
+#    commands:
+#      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+#      - docker push quassinja/mytestpkg
+
 machine:
   services:
     - docker
@@ -5,10 +25,13 @@ machine:
 dependencies:
   override:
     - docker info
+    # so we can use COPY, we send all of the repo, rather than just the dockerfile
     - docker build -t quassinja/mytestpkg  .
 test:
   override:
+      # see if we can start container...
     - docker run --name mytestpkg -d -p 8787:8787 quassinja/mytestpkg ; sleep 10
+      # make RStudio server run in browser...
     - curl --retry 10 --retry-delay 5 -v http://localhost:8787
 
 deployment:
@@ -17,4 +40,5 @@ deployment:
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push quassinja/mytestpkg
+
 
