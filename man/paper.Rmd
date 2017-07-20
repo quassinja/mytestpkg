@@ -52,9 +52,25 @@ here is a footnote: ^[Text and things]
 In figure XX \@ref(fig:pressureplot) you can clearly see a big increase...
 But in table \@ref(tab:demotable) we can see...
 
-# new function
+# packrat
+
+install.packages("packrat")
 
 
+<!-- then:
+-->
+
+```{r}
+library(binford)
+data(LRB)
+knitr::kable(head(LRB))
+```
+
+packrat::on()
+
+#packrat::off() turns packrat off, afterwards the folder should be deleted
 
 
+#checkpoint installs packages from snapshots
 
+install.packages("checkpoint") 
