@@ -18,6 +18,6 @@ addons:
       - libproj-dev
 script:
   - Rscript -e "options(repos = '$MRAN')"
-  - Rscript -e "rmarkdown::render('man/paper.Rmd')"
+  - Rscript -e "rmarkdown::render('analysis/TestPackage.Rmd')"
 
 
