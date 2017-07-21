@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Point Pattern
 
 ```{r}
-harran=read.table("data/Sites_HarranPlain.csv",
+harran=read.table("../data/Sites_HarranPlain.csv",
            sep = ",",
            header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str(harran)
@@ -92,7 +92,7 @@ plot(harran_kde)
 ```{r ch4}
 
 library(raster)
-dem <- raster("data/dem.tif") # see above for problems when knitting
+dem <- raster("../data/dem.tif") # see above for problems when knitting
 
 # or: library(rgdal)
 #dem <- readGDAL("data/dem.tif")
@@ -110,7 +110,7 @@ plot(im_dem)
 ```{r ch5}
 
 ?rhohat # smoothing estimate: changes the raster
-harran_rhohat <- rhohat(harran_ppp, im_dem)
+harran_rhohat <- rhohat(harran_ppp, im_dem, bw = 200)
               # <- rhohat(harran_ppp, im_dem, bw=200) /gives a more distinct picture
 
 plot(harran_rhohat) #x=elevation y=relative intensity of points -> relation of elevation to pointdensity, bandwidth=default -> default=sigma in the structure of the object(str(harran_rhohat))
@@ -126,6 +126,7 @@ plot(diff_rho)
 # challenge: test poisson, create random points with rpoispp function that have the same intensity like our points
 
 ```{r ch6}
+
 set.seed(123)
 harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window), win=harran_ppp$window)
 set.seed(123)
@@ -140,6 +141,106 @@ points(harran_rpoispp4, col="red")
 
 # first block is all the same, different ways to get the same result
 ```
+
+#Second order effects
+
+```{r ch7}
+
+harran_g <- Gest(harran_ppp)
+str(harran_g)
+plot(harran_g) # x=closest neighbours expected (blue), the rest shows higher than expected clusters y= distance
+
+harran_ge <- envelope(harran_ppp, fun = "Gest") # calculates g function for random points
+plot(harran_ge) # grey shadow_ monte Carlo Simulation
+
+```
+
+<!--
+str(harran_g) ->
+Classes ‘fv’ and 'data.frame':	513 obs. of  7 variables:
+ $ r      : num  0 13.3 26.7 40 53.4 ... # distance measure
+ $ theo   : num  0.00 4.39e-05 1.76e-04 3.95e-04 7.02e-04 ...
+ $ han    : num  0 0 0 0 0 ...
+ $ rs     : num  0 0 0 0 0 ...
+ $ km     : num  0 0 0 0 0 ...
+ $ hazard : num  0 0 0 0 0 ...
+ $ theohaz: num  0.00 6.58e-06 1.32e-05 1.97e-05 2.63e-05 ...
+ - attr(*, "argu")= chr "r"
+ - attr(*, "valu")= chr "km"
+ - attr(*, "ylab")= language G(r)
+ - attr(*, "yexp")= language G(r)
+ - attr(*, "fmla")= chr ".~r"
+ - attr(*, "alim")= num  0 2628
+ - attr(*, "labl")= chr  "r" "%s[pois](r)" "hat(%s)[han](r)" "hat(%s)[bord](r)" ...
+ - attr(*, "desc")= chr  "distance argument r" "theoretical Poisson %s" "Hanisch estimate of %s" "border corrected estimate of %s" ...
+ - attr(*, "units")=List of 3
+  ..$ singular  : chr "unit"
+  ..$ plural    : chr "units"
+  ..$ multiplier: num 1
+  ..- attr(*, "class")= chr "units"
+ - attr(*, "fname")= chr "G"
+ - attr(*, "dotnames")= chr  "km" "rs" "han" "theo"
+-->
+
+
+# challenge: do F and K Function
+
+```{r ch8}
+
+#F-function:
+
+harran_f <- Fest(harran_ppp)
+plot(harran_f)
+
+harran_fe <- envelope(harran_ppp, fun = "Fest") # calculates f function for random points
+plot(harran_fe)
+
+## red: expected, black deviates -> expect that the empty spaces are smaller than expected = clustered
+
+
+#K-function
+
+harran_k <- Kest(harran_ppp)
+plot(harran_k)
+
+harran_ke <- envelope(harran_ppp, fun = "Kest")
+plot(harran_ke) 
+
+```
+
+# Inhomogeneous Poissonfunction G/F/K 
+
+
+```{r ch9}
+
+harran_gi <- Ginhom(harran_ppp, lambda = predict(harran_rhohat)) # harran_rhohat needs an bandwidth of 200
+plot(harran_gi)
+
+
+harran_fi <- Finhom(harran_ppp, lambda = predict(harran_rhohat))
+plot(harran_fi)
+
+#par(mfrow = c(1,2))
+#plot(harran_gi, xlim = c(0,6000))
+#plot(harran_g, xlim = c(0,6000))      Gegenüberstellung 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
