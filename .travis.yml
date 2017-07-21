@@ -17,5 +17,5 @@ addons:
       - libpng-dev
       - libproj-dev
 script:
-  - Rscript -e "options(repos = '$MRAN')"
+  - Rscript -e "options(repos = '$MRAN'); devtools::install()"
   - Rscript -e "rmarkdown::render('analysis/PackageTest.Rmd')"
