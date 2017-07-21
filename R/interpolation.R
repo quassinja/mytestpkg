@@ -74,6 +74,17 @@ autkrig=autoKrige(mean_r~1, test2,
 
 plot(autkrig)
 
+###### KED = Kriging with external Drift
+
+names(srtm4)="altitude"   # renames srtm4 (aggregated srtm!)
+names(srtm4)  # checks on the name
+
+test3=test2[!is.na(test2$altitude),]  # sorting values from NA´s
+
+autked=autoKrige(mean_r~altitude, test3,
+                 as(srtm4,"SpatialGridDataFrame"))
+
+plot(autked)
 
 
 

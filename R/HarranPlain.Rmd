@@ -1,0 +1,146 @@
+---
+title: "HarranPlain"
+author: "Nicole Grunert"
+date: "20 Juli 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Point Pattern
+
+```{r}
+harran=read.table("data/Sites_HarranPlain.csv",
+           sep = ",",
+           header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+str(harran)
+```
+
+## spatstat
+
+```{r}
+library(sp)
+coordinates(harran) <- ~X+Y
+proj4string(harran) <- CRS("+init=epsg:4326")
+
+harran <- spTransform(harran, CRSobj = CRS("+init=epsg:32637"))
+str(harran) # for checking
+
+
+library(spatstat)
+
+str(harran@coords) # structure
+
+harran_ppp <- ppp(x=harran@coords[,1],
+                  y=harran@coords[,2],
+                  window = owin(xrange = harran@bbox[1,],
+                                yrange = c(min(harran@coords[,2]),
+                                           min(harran@coords[,2])+52000)))
+
+
+harran_ppp=unique.ppp(harran_ppp) # shows number of duplicated points and deletes them/ harran_ppp= has to be done to define harran_ppp new
+
+str(harran_ppp)
+plot(harran_ppp)
+
+library(mapview)
+mapview(harran)
+
+```
+
+## Challenge: delete duplicated points
+
+
+```{r ch1}
+harran_ppp=unique.ppp(harran_ppp) # shows number of duplicated points and deletes them/ harran_ppp= has to be done to define harran_ppp new
+
+
+# or:
+#anyDuplicated(harran_ppp)
+#harran <- unique(harran_ppp)
+#harran_ppp <- harran_ppp[!duplicated(harran_ppp)]
+
+plot(harran_ppp)
+
+```
+
+#Nearest neighbour distance
+
+```{r ch2}
+
+harran_ppp_nn <- nndist(harran_ppp)
+str(harran_ppp_nn) # shows distance within the structure(str)
+
+hist(harran_ppp_nn)  # plots the nearest neighbour
+#barplot(sort(harran_ppp_nn))
+
+```
+
+# challenge: create a kernel density estimation
+
+```{r ch3}
+
+harran_kde <- density.ppp(harran_ppp, sigma = mean(harran_ppp_nn))# see: likelihood cross validation bandwidth selection for kernel density (help)
+plot(harran_kde)
+
+```
+
+# raster
+
+```{r ch4}
+
+library(raster)
+dem <- raster("data/dem.tif") # see above for problems when knitting
+
+# or: library(rgdal)
+#dem <- readGDAL("data/dem.tif")
+plot(dem)
+
+im_dem <- as.im(as.image.SpatialGridDataFrame(as(dem, "SpatialGridDataFrame"))) #creates image
+plot(im_dem)
+
+
+```
+
+
+# challenge: use rhohat and create a plot
+
+```{r ch5}
+
+?rhohat # smoothing estimate: changes the raster
+harran_rhohat <- rhohat(harran_ppp, im_dem)
+              # <- rhohat(harran_ppp, im_dem, bw=200) /gives a more distinct picture
+
+plot(harran_rhohat) #x=elevation y=relative intensity of points -> relation of elevation to pointdensity, bandwidth=default -> default=sigma in the structure of the object(str(harran_rhohat))
+
+rho_dem <- predict(harran_rhohat)
+plot(rho_dem)
+
+diff_rho <- harran_kde-rho_dem
+plot(diff_rho)
+
+```
+
+# challenge: test poisson, create random points with rpoispp function that have the same intensity like our points
+
+```{r ch6}
+set.seed(123)
+harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window), win=harran_ppp$window)
+set.seed(123)
+harran_rpoispp3 <- rpoispp(intensity(harran_ppp), win=Window(harran_ppp))
+set.seed(123)
+harran_rpoispp4 <- rpoispp(ex = harran_ppp)
+
+plot(harran_ppp)
+points(harran_rpoispp2, col="green")
+points(harran_rpoispp3, col="blue")
+points(harran_rpoispp4, col="red")
+
+# first block is all the same, different ways to get the same result
+```
+
+
+
+Note that the `echo = FALSE` parameter is added to the code chunk to prevent printing of the R code that generated the plot.
