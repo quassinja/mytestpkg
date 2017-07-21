@@ -1,21 +1,21 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-warnings_are_errors: TRUE
+warnings_are_errors: true
 language: R
 sudo: false
 cache: packages
 repros:
   MRAN: "https://mran.microsoft.com/snapshot/2017-07-20"
 addons:
- +  apt:
- +    packages:
- +      - libudunits2-dev
- +      - libdgdal-dev
- +      - libgsl0-dev
- +      - gdal-bin
- +      - libgeos-dev
- +      - libpng-dev
- +      - libproj-dev
+  apt:
+    packages:
+      - libudunits2-dev
+      - libdgdal-dev
+      - libgsl0-dev
+      - gdal-bin
+      - libgeos-dev
+      - libpng-dev
+      - libproj-dev
 script:
   - Rscript -e "options(repos = '$MRAN')"
   - Rscript -e "rmarkdown::render('man/paper.RMD')"
