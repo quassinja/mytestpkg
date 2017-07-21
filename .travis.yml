@@ -19,5 +19,3 @@ addons:
 script:
   - Rscript -e "options(repos = '$MRAN')"
   - Rscript -e "rmarkdown::render('analysis/PackageTest.Rmd')"
-
-
