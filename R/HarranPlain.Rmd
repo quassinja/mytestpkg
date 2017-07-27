@@ -2,7 +2,7 @@
 title: "HarranPlain"
 author: "Nicole Grunert"
 date: "20 Juli 2017"
-output: html_document
+output: bookdown::word_document2
     
 ---
 
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Point Pattern
 
 ```{r}
-harran=read.table("../data/Sites_HarranPlain.csv",
+harran=read.table("data/Sites_HarranPlain.csv",
            sep = ",",
            header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str(harran)
@@ -93,7 +93,7 @@ plot(harran_kde)
 ```{r ch4}
 
 library(raster)
-dem <- raster("../data/dem.tif") # see above for problems when knitting
+dem <- raster("data/dem.tif") # see above for problems when knitting
 
 # or: library(rgdal)
 #dem <- readGDAL("data/dem.tif")

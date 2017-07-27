@@ -4,7 +4,7 @@ author: "Nicole Grunert"  # or: author: (new line) - Nicole Grunert (new line) -
 date: '`r Sys.Date()`'
 bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document
-output: html_document
+output: bookdown::word_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -74,4 +74,4 @@ knitr::kable(head(LRB))
 
 #checkpoint installs packages from snapshots
 
-install.packages("checkpoint") 
+#install.packages("checkpoint") 
