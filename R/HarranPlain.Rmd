@@ -2,8 +2,9 @@
 title: "HarranPlain"
 author: "Nicole Grunert"
 date: "20 Juli 2017"
-output: bookdown::word_document2
-    
+bibliography: my_references.bib
+#output: html_document  # .yml or meta chunk html_document bookdown::word_document2
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Point Pattern
 
 ```{r}
-harran=read.table("data/Sites_HarranPlain.csv",
+harran=read.table("../data/Sites_HarranPlain.csv",
            sep = ",",
            header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str(harran)
@@ -93,7 +94,7 @@ plot(harran_kde)
 ```{r ch4}
 
 library(raster)
-dem <- raster("data/dem.tif") # see above for problems when knitting
+dem <- raster("../data/dem.tif") # see above for problems when knitting
 
 # or: library(rgdal)
 #dem <- readGDAL("data/dem.tif")
@@ -110,7 +111,7 @@ plot(im_dem)
 
 ```{r ch5}
 
-?rhohat # smoothing estimate: changes the raster
+#?rhohat # smoothing estimate: changes the raster
 harran_rhohat <- rhohat(harran_ppp, im_dem, bw = 200)
               # <- rhohat(harran_ppp, im_dem, bw=200) /gives a more distinct picture
 
@@ -226,22 +227,6 @@ plot(harran_fi)
 #plot(harran_g, xlim = c(0,6000))      Gegenüberstellung 
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
