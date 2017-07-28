@@ -7,7 +7,7 @@ Maintainer: Nicole Grunert <nicolegrunert@gmail.com>
 Description: This compendium contains code and data for the publication in <http://www.sciencedirect.com>.
     The version that matched the published results is archived at <doi:xxx/xxx>.
 License: MIT + file LICENSE
-encoding: UTF-8
+
 LazyData: TRUE
 Suggests: testthat
 Imports: dplyr, magrittr, spatstat, raster, rgdal, rmarkdown, knitr, bookdown, readr, binford

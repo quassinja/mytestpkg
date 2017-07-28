@@ -9,7 +9,6 @@ output: bookdown::word_document2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-checkpoint::checkpoint("2017-07-20")
 ```
 
 ## R Markdown
