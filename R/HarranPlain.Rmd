@@ -4,7 +4,7 @@ author: "Nicole Grunert"
 date: "20 Juli 2017"
 bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
-output: pdf_document
+output: bookdown::pdf_document2
 ---
 
 ```{r setup, include=FALSE}
@@ -55,7 +55,7 @@ mapview(harran)
 ## Challenge: delete duplicated points
 
 
-```{r ch1}
+```{r}
 harran_ppp=unique.ppp(harran_ppp) # shows number of duplicated points and deletes them/ harran_ppp= has to be done to define harran_ppp new
 
 
@@ -70,7 +70,7 @@ plot(harran_ppp)
 
 #Nearest neighbour distance
 
-```{r ch2}
+```{r}
 
 harran_ppp_nn <- nndist(harran_ppp)
 str(harran_ppp_nn) # shows distance within the structure(str)
@@ -82,7 +82,7 @@ hist(harran_ppp_nn)  # plots the nearest neighbour
 
 # challenge: create a kernel density estimation
 
-```{r ch3}
+```{r}
 
 harran_kde <- density.ppp(harran_ppp, sigma = mean(harran_ppp_nn))# see: likelihood cross validation bandwidth selection for kernel density (help)
 plot(harran_kde)
@@ -91,7 +91,7 @@ plot(harran_kde)
 
 # raster
 
-```{r ch4}
+```{r}
 
 library(raster)
 dem <- raster("../data/dem.tif") # see above for problems when knitting
@@ -109,7 +109,7 @@ plot(im_dem)
 
 # challenge: use rhohat and create a plot
 
-```{r ch5}
+```{r}
 
 #?rhohat # smoothing estimate: changes the raster
 harran_rhohat <- rhohat(harran_ppp, im_dem, bw = 200)
@@ -127,7 +127,7 @@ plot(diff_rho)
 
 # challenge: test poisson, create random points with rpoispp function that have the same intensity like our points
 
-```{r ch6}
+```{r}
 
 set.seed(123)
 harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window), win=harran_ppp$window)
@@ -146,7 +146,7 @@ points(harran_rpoispp4, col="red")
 
 #Second order effects
 
-```{r ch7}
+```{r}
 
 harran_g <- Gest(harran_ppp)
 str(harran_g)
@@ -187,7 +187,7 @@ Classes ‘fv’ and 'data.frame':	513 obs. of  7 variables:
 
 # challenge: do F and K Function
 
-```{r ch8}
+```{r}
 
 #F-function:
 
@@ -213,7 +213,7 @@ plot(harran_ke)
 # Inhomogeneous Poissonfunction G/F/K 
 
 
-```{r ch9}
+```{r}
 
 harran_gi <- Ginhom(harran_ppp, lambda = predict(harran_rhohat)) # harran_rhohat needs an bandwidth of 200
 plot(harran_gi)
