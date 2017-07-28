@@ -2,13 +2,25 @@
 title: "HarranPlain"
 author: "Nicole Grunert"
 date: "20 Juli 2017"
-#bibliography: my_references.bib
+bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
 always_allow_html: yes  # when problem with html writing
-output: bookdown::pdf_document2
+output: 
+  pdf_document: 
+    latex_engine: xelatex
+#bookdown::pdf_document2
+
+#before:
+#title: "HarranPlain"
+#author: "Nicole Grunert"
+#date: "20 Juli 2017"
+#bibliography: my_references.bib
+#output: html_document  # .yml or meta chunk html_document bookdown::word_document2
+#always_allow_html: yes  # when problem with html writing
+#output: bookdown::pdf_document2
 ---
 
-```{r setup}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE) #include=FALSE nicht in pdf output?
 ```
 
@@ -17,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE) #include=FALSE nicht in pdf output?
 ```{r}
 harran=read.table("../data/Sites_HarranPlain.csv",
                   sep = ",",
-                  header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!
+                  header = TRUE) # when knitting: "../data/Sites_HarranPlain.csv"!!!!!
 str(harran)
 ```
 
@@ -40,7 +52,7 @@ harran_ppp <- ppp(x=harran@coords[,1],
                   y=harran@coords[,2],
                   window = owin(xrange = harran@bbox[1,],
                                 yrange = c(min(harran@coords[,2]),
-                                           min(harran@coords[,2])+52000)))
+                                          min(harran@coords[,2])+52000)))
 
 
 harran_ppp=unique.ppp(harran_ppp) # shows number of duplicated points and deletes them/ harran_ppp= has to be done to define harran_ppp new
@@ -130,7 +142,8 @@ plot(diff_rho)
 ```{r}
 
 set.seed(123)
-harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window), win=harran_ppp$window)
+harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window),
+                          win=harran_ppp$window)
 set.seed(123)
 harran_rpoispp3 <- rpoispp(intensity(harran_ppp),win=Window(harran_ppp))
 set.seed(123)

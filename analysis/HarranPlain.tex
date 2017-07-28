@@ -132,19 +132,13 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr::opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{echo =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{#include=FALSE nicht in pdf output?}
-\end{Highlighting}
-\end{Shaded}
-
 \subsection{Point Pattern}\label{point-pattern}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{harran=}\KeywordTok{read.table}\NormalTok{(}\StringTok{"../data/Sites_HarranPlain.csv"}\NormalTok{,}
                   \DataTypeTok{sep =} \StringTok{","}\NormalTok{,}
-                  \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)   }\CommentTok{# when knitting: "../data/Sites_HarranPlain.csv"!!!!!}
+                  \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{# when knitting: "../data/Sites_HarranPlain.csv"!!!!!}
 \KeywordTok{str}\NormalTok{(harran)}
 \end{Highlighting}
 \end{Shaded}
@@ -255,7 +249,7 @@
                   \DataTypeTok{y=}\NormalTok{harran@coords[,}\DecValTok{2}\NormalTok{],}
                   \DataTypeTok{window =} \KeywordTok{owin}\NormalTok{(}\DataTypeTok{xrange =} \NormalTok{harran@bbox[}\DecValTok{1}\NormalTok{,],}
                                 \DataTypeTok{yrange =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(harran@coords[,}\DecValTok{2}\NormalTok{]),}
-                                           \KeywordTok{min}\NormalTok{(harran@coords[,}\DecValTok{2}\NormalTok{])+}\DecValTok{52000}\NormalTok{)))}
+                                          \KeywordTok{min}\NormalTok{(harran@coords[,}\DecValTok{2}\NormalTok{])+}\DecValTok{52000}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -486,7 +480,8 @@ points}\label{challenge-test-poisson-create-random-points-with-rpoispp-function-
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{harran_rpoispp2 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\DataTypeTok{lambda =} \NormalTok{harran_ppp$n/}\KeywordTok{area.owin}\NormalTok{(harran_ppp$window), }\DataTypeTok{win=}\NormalTok{harran_ppp$window)}
+\NormalTok{harran_rpoispp2 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\DataTypeTok{lambda =} \NormalTok{harran_ppp$n/}\KeywordTok{area.owin}\NormalTok{(harran_ppp$window),}
+                          \DataTypeTok{win=}\NormalTok{harran_ppp$window)}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
 \NormalTok{harran_rpoispp3 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\KeywordTok{intensity}\NormalTok{(harran_ppp),}\DataTypeTok{win=}\KeywordTok{Window}\NormalTok{(harran_ppp))}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
