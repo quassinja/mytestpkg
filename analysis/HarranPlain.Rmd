@@ -17,7 +17,7 @@ output:
 #bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
 #always_allow_html: yes  # when problem with html writing
-#output: bookdown::pdf_document2
+#output: bookdown::word_document2
 ---
 
 ```{r setup, include=FALSE}
