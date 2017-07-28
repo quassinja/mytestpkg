@@ -6,7 +6,7 @@ bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
 always_allow_html: yes  # when problem with html writing
 output: 
-  pdf_document: 
+  bookdown::pdf_document2: 
     latex_engine: xelatex
 #bookdown::pdf_document2
 
