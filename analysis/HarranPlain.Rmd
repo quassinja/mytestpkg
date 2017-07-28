@@ -2,8 +2,9 @@
 title: "HarranPlain"
 author: "Nicole Grunert"
 date: "20 Juli 2017"
-bibliography: my_references.bib
+#bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
+always_allow_html: yes
 output: bookdown::pdf_document2
 ---
 
