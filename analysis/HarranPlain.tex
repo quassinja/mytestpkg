@@ -132,13 +132,19 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr::opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{echo =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{#include=FALSE nicht in pdf output?}
+\end{Highlighting}
+\end{Shaded}
+
 \subsection{Point Pattern}\label{point-pattern}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{harran=}\KeywordTok{read.table}\NormalTok{(}\StringTok{"../data/Sites_HarranPlain.csv"}\NormalTok{,}
-           \DataTypeTok{sep =} \StringTok{","}\NormalTok{,}
-           \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)   }\CommentTok{# when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}
+                  \DataTypeTok{sep =} \StringTok{","}\NormalTok{,}
+                  \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)   }\CommentTok{# when knitting: "../data/Sites_HarranPlain.csv"!!!!!}
 \KeywordTok{str}\NormalTok{(harran)}
 \end{Highlighting}
 \end{Shaded}
@@ -321,11 +327,7 @@
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
-\end{verbatim}
-
-\hypertarget{htmlwidget-64126c76b9d7ccca4d8d}{}
+\includegraphics{HarranPlain_files/figure-latex/unnamed-chunk-2-2.pdf}
 
 \subsection{Challenge: delete duplicated
 points}\label{challenge-delete-duplicated-points}
@@ -378,7 +380,7 @@ estimation}\label{challenge-create-a-kernel-density-estimation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_kde <-}\StringTok{ }\KeywordTok{density.ppp}\NormalTok{(harran_ppp, }\DataTypeTok{sigma =} \KeywordTok{mean}\NormalTok{(harran_ppp_nn))}\CommentTok{# see: likelihood cross validation bandwidth selection for kernel density (help)}
+\NormalTok{harran_kde <-}\StringTok{ }\KeywordTok{density.ppp}\NormalTok{(harran_ppp,}\DataTypeTok{sigma =} \KeywordTok{mean}\NormalTok{(harran_ppp_nn))}\CommentTok{# see: likelihood cross validation bandwidth selection for kernel density (help)}
 \KeywordTok{plot}\NormalTok{(harran_kde)}
 \end{Highlighting}
 \end{Shaded}
@@ -428,7 +430,7 @@ estimation}\label{challenge-create-a-kernel-density-estimation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{im_dem <-}\StringTok{ }\KeywordTok{as.im}\NormalTok{(}\KeywordTok{as.image.SpatialGridDataFrame}\NormalTok{(}\KeywordTok{as}\NormalTok{(dem, }\StringTok{"SpatialGridDataFrame"}\NormalTok{))) }\CommentTok{#creates image}
+\NormalTok{im_dem <-}\StringTok{ }\KeywordTok{as.im}\NormalTok{(}\KeywordTok{as.image.SpatialGridDataFrame}\NormalTok{(}\KeywordTok{as}\NormalTok{(dem,}\StringTok{"SpatialGridDataFrame"}\NormalTok{))) }\CommentTok{#creates image}
 \KeywordTok{plot}\NormalTok{(im_dem)}
 \end{Highlighting}
 \end{Shaded}
@@ -441,7 +443,7 @@ plot}\label{challenge-use-rhohat-and-create-a-plot}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#?rhohat # smoothing estimate: changes the raster}
-\NormalTok{harran_rhohat <-}\StringTok{ }\KeywordTok{rhohat}\NormalTok{(harran_ppp, im_dem, }\DataTypeTok{bw =} \DecValTok{200}\NormalTok{)}
+\NormalTok{harran_rhohat <-}\StringTok{ }\KeywordTok{rhohat}\NormalTok{(harran_ppp,im_dem,}\DataTypeTok{bw =} \DecValTok{200}\NormalTok{)}
               \CommentTok{# <- rhohat(harran_ppp, im_dem, bw=200) /gives a more distinct picture}
 
 \KeywordTok{plot}\NormalTok{(harran_rhohat) }\CommentTok{#x=elevation y=relative intensity of points -> relation of elevation to pointdensity, bandwidth=default -> default=sigma in the structure of the object(str(harran_rhohat))}
@@ -486,14 +488,14 @@ points}\label{challenge-test-poisson-create-random-points-with-rpoispp-function-
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
 \NormalTok{harran_rpoispp2 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\DataTypeTok{lambda =} \NormalTok{harran_ppp$n/}\KeywordTok{area.owin}\NormalTok{(harran_ppp$window), }\DataTypeTok{win=}\NormalTok{harran_ppp$window)}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\NormalTok{harran_rpoispp3 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\KeywordTok{intensity}\NormalTok{(harran_ppp), }\DataTypeTok{win=}\KeywordTok{Window}\NormalTok{(harran_ppp))}
+\NormalTok{harran_rpoispp3 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\KeywordTok{intensity}\NormalTok{(harran_ppp),}\DataTypeTok{win=}\KeywordTok{Window}\NormalTok{(harran_ppp))}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
 \NormalTok{harran_rpoispp4 <-}\StringTok{ }\KeywordTok{rpoispp}\NormalTok{(}\DataTypeTok{ex =} \NormalTok{harran_ppp)}
 
 \KeywordTok{plot}\NormalTok{(harran_ppp)}
-\KeywordTok{points}\NormalTok{(harran_rpoispp2, }\DataTypeTok{col=}\StringTok{"green"}\NormalTok{)}
-\KeywordTok{points}\NormalTok{(harran_rpoispp3, }\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{)}
-\KeywordTok{points}\NormalTok{(harran_rpoispp4, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(harran_rpoispp2,}\DataTypeTok{col=}\StringTok{"green"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(harran_rpoispp3,}\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(harran_rpoispp4,}\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -550,7 +552,7 @@ points}\label{challenge-test-poisson-create-random-points-with-rpoispp-function-
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_ge <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp, }\DataTypeTok{fun =} \StringTok{"Gest"}\NormalTok{) }\CommentTok{# calculates g function for random points}
+\NormalTok{harran_ge <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp,}\DataTypeTok{fun =} \StringTok{"Gest"}\NormalTok{) }\CommentTok{# calculates g function for random points}
 \end{Highlighting}
 \end{Shaded}
 
@@ -587,7 +589,7 @@ Function}\label{challenge-do-f-and-k-function}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_fe <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp, }\DataTypeTok{fun =} \StringTok{"Fest"}\NormalTok{) }\CommentTok{# calculates f function for random points}
+\NormalTok{harran_fe <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp,}\DataTypeTok{fun =} \StringTok{"Fest"}\NormalTok{) }\CommentTok{# calculates f function for random points}
 \end{Highlighting}
 \end{Shaded}
 
@@ -624,7 +626,7 @@ Function}\label{challenge-do-f-and-k-function}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_ke <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp, }\DataTypeTok{fun =} \StringTok{"Kest"}\NormalTok{)}
+\NormalTok{harran_ke <-}\StringTok{ }\KeywordTok{envelope}\NormalTok{(harran_ppp,}\DataTypeTok{fun =} \StringTok{"Kest"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -650,7 +652,7 @@ G/F/K}\label{inhomogeneous-poissonfunction-gfk}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_gi <-}\StringTok{ }\KeywordTok{Ginhom}\NormalTok{(harran_ppp, }\DataTypeTok{lambda =} \KeywordTok{predict}\NormalTok{(harran_rhohat)) }\CommentTok{# harran_rhohat needs an bandwidth of 200}
+\NormalTok{harran_gi <-}\StringTok{ }\KeywordTok{Ginhom}\NormalTok{(harran_ppp,}\DataTypeTok{lambda =} \KeywordTok{predict}\NormalTok{(harran_rhohat)) }\CommentTok{# harran_rhohat needs an bandwidth of 200}
 \KeywordTok{plot}\NormalTok{(harran_gi)}
 \end{Highlighting}
 \end{Shaded}
@@ -659,7 +661,7 @@ G/F/K}\label{inhomogeneous-poissonfunction-gfk}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{harran_fi <-}\StringTok{ }\KeywordTok{Finhom}\NormalTok{(harran_ppp, }\DataTypeTok{lambda =} \KeywordTok{predict}\NormalTok{(harran_rhohat))}
+\NormalTok{harran_fi <-}\StringTok{ }\KeywordTok{Finhom}\NormalTok{(harran_ppp,}\DataTypeTok{lambda =} \KeywordTok{predict}\NormalTok{(harran_rhohat))}
 \KeywordTok{plot}\NormalTok{(harran_fi)}
 \end{Highlighting}
 \end{Shaded}

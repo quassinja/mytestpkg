@@ -4,7 +4,7 @@ author: "Nicole Grunert"  # or: author: (new line) - Nicole Grunert (new line) -
 date: '`r Sys.Date()`'
 bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_documentbookdown::word_document2
-output: bookdown::word_document2
+output: bookdown::pdf_document2
 ---
 # challenges: 
 # create analysis directory
@@ -14,8 +14,8 @@ output: bookdown::word_document2
 # document your function with roxygen
 # use the function in your rmd
 
-```{r setup, include=False}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE}  
+knitr::opts_chunk$set(echo = TRUE) #include=False doesnt work in pdf output?
 ```
 
 # rubish

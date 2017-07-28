@@ -4,20 +4,20 @@ author: "Nicole Grunert"
 date: "20 Juli 2017"
 #bibliography: my_references.bib
 #output: html_document  # .yml or meta chunk html_document bookdown::word_document2
-always_allow_html: yes
+always_allow_html: yes  # when problem with html writing
 output: bookdown::pdf_document2
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE) #include=FALSE nicht in pdf output?
 ```
 
 ## Point Pattern
 
 ```{r}
 harran=read.table("../data/Sites_HarranPlain.csv",
-           sep = ",",
-           header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                  sep = ",",
+                  header = TRUE)   # when knitting: "../data/Sites_HarranPlain.csv"!!!!!
 str(harran)
 ```
 
@@ -78,14 +78,13 @@ str(harran_ppp_nn) # shows distance within the structure(str)
 
 hist(harran_ppp_nn)  # plots the nearest neighbour
 #barplot(sort(harran_ppp_nn))
-
 ```
 
 # challenge: create a kernel density estimation
 
 ```{r}
 
-harran_kde <- density.ppp(harran_ppp, sigma = mean(harran_ppp_nn))# see: likelihood cross validation bandwidth selection for kernel density (help)
+harran_kde <- density.ppp(harran_ppp,sigma = mean(harran_ppp_nn))# see: likelihood cross validation bandwidth selection for kernel density (help)
 plot(harran_kde)
 
 ```
@@ -101,7 +100,7 @@ dem <- raster("../data/dem.tif") # see above for problems when knitting
 #dem <- readGDAL("data/dem.tif")
 plot(dem)
 
-im_dem <- as.im(as.image.SpatialGridDataFrame(as(dem, "SpatialGridDataFrame"))) #creates image
+im_dem <- as.im(as.image.SpatialGridDataFrame(as(dem,"SpatialGridDataFrame"))) #creates image
 plot(im_dem)
 
 
@@ -113,7 +112,7 @@ plot(im_dem)
 ```{r}
 
 #?rhohat # smoothing estimate: changes the raster
-harran_rhohat <- rhohat(harran_ppp, im_dem, bw = 200)
+harran_rhohat <- rhohat(harran_ppp,im_dem,bw = 200)
               # <- rhohat(harran_ppp, im_dem, bw=200) /gives a more distinct picture
 
 plot(harran_rhohat) #x=elevation y=relative intensity of points -> relation of elevation to pointdensity, bandwidth=default -> default=sigma in the structure of the object(str(harran_rhohat))
@@ -133,14 +132,14 @@ plot(diff_rho)
 set.seed(123)
 harran_rpoispp2 <- rpoispp(lambda = harran_ppp$n/area.owin(harran_ppp$window), win=harran_ppp$window)
 set.seed(123)
-harran_rpoispp3 <- rpoispp(intensity(harran_ppp), win=Window(harran_ppp))
+harran_rpoispp3 <- rpoispp(intensity(harran_ppp),win=Window(harran_ppp))
 set.seed(123)
 harran_rpoispp4 <- rpoispp(ex = harran_ppp)
 
 plot(harran_ppp)
-points(harran_rpoispp2, col="green")
-points(harran_rpoispp3, col="blue")
-points(harran_rpoispp4, col="red")
+points(harran_rpoispp2,col="green")
+points(harran_rpoispp3,col="blue")
+points(harran_rpoispp4,col="red")
 
 # first block is all the same, different ways to get the same result
 ```
@@ -153,7 +152,7 @@ harran_g <- Gest(harran_ppp)
 str(harran_g)
 plot(harran_g) # x=closest neighbours expected (blue), the rest shows higher than expected clusters y= distance
 
-harran_ge <- envelope(harran_ppp, fun = "Gest") # calculates g function for random points
+harran_ge <- envelope(harran_ppp,fun = "Gest") # calculates g function for random points
 plot(harran_ge) # grey shadow_ monte Carlo Simulation
 
 ```
@@ -195,7 +194,7 @@ Classes ‘fv’ and 'data.frame':	513 obs. of  7 variables:
 harran_f <- Fest(harran_ppp)
 plot(harran_f)
 
-harran_fe <- envelope(harran_ppp, fun = "Fest") # calculates f function for random points
+harran_fe <- envelope(harran_ppp,fun = "Fest") # calculates f function for random points
 plot(harran_fe)
 
 ## red: expected, black deviates -> expect that the empty spaces are smaller than expected = clustered
@@ -206,7 +205,7 @@ plot(harran_fe)
 harran_k <- Kest(harran_ppp)
 plot(harran_k)
 
-harran_ke <- envelope(harran_ppp, fun = "Kest")
+harran_ke <- envelope(harran_ppp,fun = "Kest")
 plot(harran_ke) 
 
 ```
@@ -216,11 +215,11 @@ plot(harran_ke)
 
 ```{r}
 
-harran_gi <- Ginhom(harran_ppp, lambda = predict(harran_rhohat)) # harran_rhohat needs an bandwidth of 200
+harran_gi <- Ginhom(harran_ppp,lambda = predict(harran_rhohat)) # harran_rhohat needs an bandwidth of 200
 plot(harran_gi)
 
 
-harran_fi <- Finhom(harran_ppp, lambda = predict(harran_rhohat))
+harran_fi <- Finhom(harran_ppp,lambda = predict(harran_rhohat))
 plot(harran_fi)
 
 #par(mfrow = c(1,2))
